@@ -68,11 +68,9 @@ const db = getFirestore(app);
 
 
   function php_email_form_submit(thisForm, action, formData, payload) {
-    debugger
     thisForm.querySelector('.loading').classList.add('d-block');
     addDoc(collection(db, "messages"), { ...payload }).then((data) => {
       console.log(data);
-      debugger
       thisForm.querySelector('.loading').classList.remove('d-block');
       thisForm.querySelector('.sent-message').classList.add('d-block');
       thisForm.reset();
