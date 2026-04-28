@@ -1,944 +1,882 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Muhammad Shaeel — Backend Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root, :root[data-theme="dark"]{
+    --bg:        oklch(0.16 0.008 250);
+    --bg-elev:   oklch(0.20 0.009 250);
+    --bg-hover:  oklch(0.23 0.010 250);
+    --ink:       oklch(0.96 0.005 250);
+    --ink-soft:  oklch(0.74 0.008 250);
+    --ink-mute:  oklch(0.56 0.010 250);
+    --ink-faint: oklch(0.42 0.010 250);
+    --rule:      oklch(0.28 0.010 250);
+    --rule-soft: oklch(0.24 0.010 250);
+    --accent:    oklch(0.72 0.09 220);   /* desaturated teal-blue */
+    --accent-ink:oklch(0.18 0.030 220);
+    --ok:        oklch(0.74 0.10 160);
+  }
+  :root[data-theme="light"]{
+    --bg:        oklch(0.99 0.004 250);
+    --bg-elev:   oklch(0.965 0.005 250);
+    --bg-hover:  oklch(0.94 0.006 250);
+    --ink:       oklch(0.20 0.012 250);
+    --ink-soft:  oklch(0.42 0.010 250);
+    --ink-mute:  oklch(0.56 0.010 250);
+    --ink-faint: oklch(0.70 0.008 250);
+    --rule:      oklch(0.88 0.006 250);
+    --rule-soft: oklch(0.93 0.005 250);
+    --accent:    oklch(0.50 0.10 220);
+    --accent-ink:oklch(0.99 0.004 250);
+    --ok:        oklch(0.50 0.10 160);
+  }
 
-  <title>Muhammad Shaeel - Software Engineer</title>
-  <meta content="Full Stack Software Engineer specializing in JavaScript, TypeScript, React, Node.js, AWS, and modern web development" name="description">
-  <meta content="Software Engineer, Full Stack Developer, React, Node.js, AWS, TypeScript, Web Development" name="keywords">
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Geist','Inter',system-ui,sans-serif;
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit}
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.svg" rel="icon" type="image/svg+xml">
-  <link href="assets/img/favicon.png" rel="alternate icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  ::selection{background:color-mix(in oklch,var(--accent) 35%,transparent);color:var(--ink)}
 
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;letter-spacing:.02em}
+  .label{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute)}
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  /* ── Layout shell ───────────────────────────── */
+  .page{
+    max-width:1240px;margin:0 auto;
+    display:grid;
+    grid-template-columns:300px 1fr;
+    gap:80px;
+    padding:64px 56px 96px;
+  }
+  @media (max-width:980px){
+    .page{grid-template-columns:1fr;gap:48px;padding:32px 24px 64px}
+  }
 
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-  
-  <!-- Custom Enhanced Styles -->
-  <link href="assets/css/custom-style.css" rel="stylesheet">
+  /* ── Sidebar ────────────────────────────────── */
+  aside.side{
+    position:sticky;top:64px;align-self:start;
+  }
+  @media (max-width:980px){
+    aside.side{position:static}
+  }
 
-  <!-- =======================================================
-  * Template Name: MyResume - v4.9.2
-  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  .id-block .name{
+    font-size:22px;font-weight:600;letter-spacing:-0.015em;margin:0 0 4px;
+  }
+  .id-block .role{
+    font-size:14px;color:var(--ink-soft);margin:0;
+  }
+
+  /* Top-right floating controls */
+  .top-controls{
+    position:fixed;top:24px;right:32px;z-index:60;
+    display:flex;gap:8px;align-items:center;
+  }
+  .top-controls button{
+    width:42px;height:42px;display:grid;place-items:center;
+    border:1px solid var(--rule);border-radius:10px;
+    color:var(--ink-soft);
+    background:color-mix(in oklch,var(--bg) 75%,transparent);
+    backdrop-filter:blur(12px);
+    cursor:pointer;
+    transition:color .15s,border-color .15s,background .15s;
+  }
+  .top-controls button:hover{color:var(--ink);border-color:var(--accent)}
+  .top-controls button svg{width:16px;height:16px}
+  :root[data-theme="dark"] #themeToggle .icon-sun{display:block}
+  :root[data-theme="dark"] #themeToggle .icon-moon{display:none}
+  :root[data-theme="light"] #themeToggle .icon-sun{display:none}
+  :root[data-theme="light"] #themeToggle .icon-moon{display:block}
+  @media (max-width:560px){
+    .top-controls{top:16px;right:16px}
+  }
+
+  /* Bottom-left socials (subtle, footer-style) */
+  .floating-socials{
+    position:fixed;left:32px;bottom:24px;z-index:50;
+    display:flex;gap:4px;align-items:center;
+  }
+  .floating-socials a{
+    width:32px;height:32px;display:grid;place-items:center;
+    border-radius:6px;
+    color:var(--ink-mute);text-decoration:none;
+    transition:color .15s,background .15s;
+  }
+  .floating-socials a:hover{color:var(--accent);background:var(--bg-elev)}
+  .floating-socials a svg{width:14px;height:14px}
+  @media (max-width:980px){
+    .floating-socials{display:none}
+  }
+
+  /* Side panel */
+  .panel-backdrop{
+    position:fixed;inset:0;z-index:90;
+    background:color-mix(in oklch,var(--bg) 50%,transparent);
+    backdrop-filter:blur(8px);
+    opacity:0;pointer-events:none;
+    transition:opacity .3s ease;
+  }
+  .panel-backdrop.open{opacity:1;pointer-events:auto}
+
+  .side-panel{
+    position:fixed;top:0;right:0;bottom:0;z-index:100;
+    width:min(440px,90vw);
+    background:var(--bg-elev);
+    border-left:1px solid var(--rule);
+    transform:translateX(100%);
+    transition:transform .42s cubic-bezier(.22,.85,.35,1);
+    display:flex;flex-direction:column;
+    padding:32px 36px;
+    box-shadow:-24px 0 60px -20px rgba(0,0,0,.5);
+  }
+  .side-panel.open{transform:translateX(0)}
+
+  .side-panel .panel-head{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:48px;
+  }
+  .side-panel .panel-head .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-mute);
+  }
+  .side-panel .panel-close{
+    width:36px;height:36px;border-radius:8px;
+    border:1px solid var(--rule);background:transparent;color:var(--ink-soft);
+    display:grid;place-items:center;cursor:pointer;
+    transition:color .15s,border-color .15s;
+  }
+  .side-panel .panel-close:hover{color:var(--ink);border-color:var(--accent)}
+
+  .side-panel nav{display:flex;flex-direction:column;gap:2px}
+  .side-panel nav a{
+    display:flex;align-items:baseline;gap:18px;
+    text-decoration:none;color:var(--ink);
+    font-size:clamp(28px,4vw,38px);font-weight:500;letter-spacing:-0.02em;
+    padding:10px 0;
+    border-bottom:1px solid var(--rule-soft);
+    transition:color .2s,transform .35s ease,opacity .35s ease;
+    transform:translateX(20px);opacity:0;
+  }
+  .side-panel.open nav a{transform:translateX(0);opacity:1}
+  .side-panel.open nav a:nth-child(1){transition-delay:.10s}
+  .side-panel.open nav a:nth-child(2){transition-delay:.16s}
+  .side-panel.open nav a:nth-child(3){transition-delay:.22s}
+  .side-panel.open nav a:nth-child(4){transition-delay:.28s}
+  .side-panel.open nav a:nth-child(5){transition-delay:.34s}
+  .side-panel nav a .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);font-weight:400}
+  .side-panel nav a:hover{color:var(--accent)}
+  .side-panel nav a:hover .num{color:var(--accent)}
+
+  .side-panel .panel-foot{
+    margin-top:auto;padding-top:24px;border-top:1px solid var(--rule-soft);
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-faint);
+  }
+  .side-panel .panel-foot .socials{display:flex;gap:4px}
+  .side-panel .panel-foot .socials a{
+    width:30px;height:30px;display:grid;place-items:center;
+    border-radius:6px;color:var(--ink-soft);
+    transition:color .15s,background .15s;
+  }
+  .side-panel .panel-foot .socials a:hover{color:var(--accent);background:var(--bg-hover)}
+  .side-panel .panel-foot .socials svg{width:13px;height:13px}
+
+  body.menu-open{overflow:hidden}
+
+  .id-block{position:relative}
+
+  /* ── Main column ────────────────────────────── */
+  main{min-width:0}
+
+  section.s{padding:72px 0;border-top:1px solid var(--rule-soft)}
+  section.s:first-child{padding-top:0;border-top:0}
+
+  .s-head{display:flex;align-items:baseline;gap:14px;margin-bottom:36px}
+  .s-head .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent)}
+  .s-head .title{font-size:13px;font-weight:500;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em}
+  .s-head .rule{flex:1;height:1px;background:var(--rule-soft)}
+
+  /* ── Hero / Intro ───────────────────────────── */
+  .hero h1{
+    font-size:clamp(34px,4.4vw,52px);
+    font-weight:500;
+    letter-spacing:-0.025em;
+    line-height:1.08;
+    margin:0 0 28px;
+    color:var(--ink);
+    max-width:18ch;
+  }
+  .hero h1 .accent{color:var(--accent)}
+
+  .hero .lede{font-size:17px;line-height:1.6;color:var(--ink-soft);max-width:62ch;margin:0 0 20px}
+  .hero .lede strong{color:var(--ink);font-weight:500}
+  .hero .lede a.co{
+    color:var(--ink);font-weight:500;text-decoration:none;
+    border-bottom:1px solid var(--accent);
+    padding-bottom:1px;
+    transition:color .15s;
+  }
+  .hero .lede a.co:hover{color:var(--accent)}
+  .hero .lede a.co .ext{font-family:'JetBrains Mono',monospace;font-size:0.75em;margin-left:3px;color:var(--accent);opacity:.85}
+
+  .kpi{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--rule-soft);
+    border-bottom:1px solid var(--rule-soft);
+    margin-top:48px;
+  }
+  .kpi > div{
+    padding:24px 20px 24px 0;
+    border-right:1px solid var(--rule-soft);
+  }
+  .kpi > div:last-child{border-right:0}
+  .kpi .v{font-size:28px;font-weight:500;letter-spacing:-0.02em;color:var(--ink);line-height:1}
+  .kpi .v .u{font-size:14px;font-weight:400;color:var(--ink-soft);margin-left:4px}
+  .kpi .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-mute);margin-top:8px;line-height:1.4}
+  @media (max-width:720px){
+    .kpi{grid-template-columns:1fr 1fr}
+    .kpi > div{padding:18px 16px 18px 0}
+    .kpi > div:nth-child(2){border-right:0}
+  }
+
+  /* ── About / Skills ─────────────────────────── */
+  .about p{font-size:15.5px;line-height:1.65;color:var(--ink);margin:0 0 18px;max-width:68ch}
+  .about p strong{font-weight:500}
+  .about p a.co{
+    color:var(--ink);font-weight:500;text-decoration:none;
+    border-bottom:1px solid var(--accent);padding-bottom:1px;
+  }
+  .about p a.co:hover{color:var(--accent)}
+
+  .stack{
+    margin-top:36px;
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--rule-soft);
+    border:1px solid var(--rule-soft);
+    border-radius:8px;overflow:hidden;
+  }
+  @media (max-width:720px){.stack{grid-template-columns:1fr}}
+  .stack .group{background:var(--bg);padding:20px 22px}
+  .stack .group h4{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-mute);margin:0 0 12px;font-weight:500;
+    display:flex;justify-content:space-between;
+  }
+  .stack .group h4 .c{color:var(--ink-faint)}
+  .stack .group ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+  .stack .group ul li{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    padding:5px 9px;border:1px solid var(--rule);border-radius:5px;
+    color:var(--ink);background:var(--bg-elev);
+  }
+  .stack .group ul li.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+  /* ── Experience ─────────────────────────────── */
+  .role{
+    display:grid;grid-template-columns:140px 1fr;gap:32px;
+    padding:28px 0;
+    border-top:1px solid var(--rule-soft);
+  }
+  .role:first-child{border-top:0;padding-top:0}
+  @media (max-width:720px){.role{grid-template-columns:1fr;gap:8px}}
+
+  .role .when{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-mute);padding-top:4px;line-height:1.6}
+  .role .when .now{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:6px;padding:2px 8px;
+    background:color-mix(in oklch,var(--ok) 14%,transparent);
+    color:var(--ok);
+    border:1px solid color-mix(in oklch,var(--ok) 30%,transparent);
+    border-radius:4px;font-size:10px;letter-spacing:.04em;
+  }
+  .role .when .now .led{width:5px;height:5px;border-radius:50%;background:var(--ok)}
+
+  .role h3{font-size:18px;font-weight:600;letter-spacing:-0.01em;margin:0 0 4px}
+  .role .at{font-size:14px;color:var(--ink-soft);margin:0 0 14px}
+  .role .at .co{color:var(--ink);font-weight:500}
+  .role .at .co a{
+    color:var(--ink);text-decoration:none;
+    border-bottom:1px solid var(--accent);padding-bottom:1px;
+    transition:color .15s;
+  }
+  .role .at .co a:hover{color:var(--accent)}
+  .role .at .ctx{color:var(--ink-mute);margin-left:4px}
+  .role .summary{font-size:14.5px;line-height:1.6;color:var(--ink);margin:0 0 14px;max-width:64ch}
+  .role ul.bullets{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+  .role ul.bullets li{
+    position:relative;padding-left:22px;
+    font-size:14px;line-height:1.6;color:var(--ink-soft);
+  }
+  .role ul.bullets li::before{
+    content:"";position:absolute;left:0;top:10px;
+    width:10px;height:1px;background:var(--accent);
+  }
+  .role ul.bullets li strong{color:var(--ink);font-weight:500}
+
+  /* ── Services / What I do ───────────────────── */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);border-radius:8px;overflow:hidden}
+  @media (max-width:720px){.grid-2{grid-template-columns:1fr}}
+  .cap{background:var(--bg);padding:24px}
+  .cap h4{font-size:15px;font-weight:600;margin:0 0 6px;letter-spacing:-0.01em}
+  .cap p{font-size:13.5px;line-height:1.6;color:var(--ink-soft);margin:0}
+  .cap .num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:10px;display:block}
+
+  /* ── Contact ────────────────────────────────── */
+  .contact h2{font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-0.02em;margin:0 0 14px;line-height:1.15;max-width:18ch}
+  .contact p{font-size:15.5px;line-height:1.6;color:var(--ink-soft);margin:0 0 28px;max-width:60ch}
+  .contact .links{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);border-radius:8px;overflow:hidden}
+  @media (max-width:560px){.contact .links{grid-template-columns:1fr}}
+  .contact .links a{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 22px;background:var(--bg);text-decoration:none;color:var(--ink);
+    transition:background .15s;
+  }
+  .contact .links a:hover{background:var(--bg-hover)}
+  .contact .links a .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:4px}
+  .contact .links a .v{font-size:14.5px;font-weight:500;letter-spacing:-0.005em}
+  .contact .links a .arrow{color:var(--ink-faint);font-family:'JetBrains Mono',monospace;font-size:14px;transition:color .15s,transform .15s}
+  .contact .links a:hover .arrow{color:var(--accent);transform:translate(2px,-2px)}
+
+  /* ── Contact form ───────────────────────────── */
+  .contact-form{
+    margin-top:32px;
+    border:1px solid var(--rule-soft);border-radius:10px;
+    background:var(--bg);
+    padding:24px;
+  }
+  .contact-form .cf-head{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-mute);margin-bottom:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .contact-form .cf-head::after{content:"";flex:1;height:1px;background:var(--rule-soft)}
+  .contact-form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  @media (max-width:560px){.contact-form .row{grid-template-columns:1fr}}
+  .contact-form .field{display:flex;flex-direction:column;gap:6px}
+  .contact-form label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-mute);
+  }
+  .contact-form .form-control{
+    font-family:inherit;font-size:14.5px;color:var(--ink);
+    background:var(--bg-elev);
+    border:1px solid var(--rule);border-radius:6px;
+    padding:11px 13px;outline:none;
+    transition:border-color .15s,background .15s;
+    width:100%;box-sizing:border-box;
+  }
+  .contact-form textarea.form-control{min-height:130px;resize:vertical;font-family:inherit;line-height:1.55}
+  .contact-form .form-control::placeholder{color:var(--ink-faint)}
+  .contact-form .form-control:focus{border-color:var(--accent);background:var(--bg)}
+  .contact-form .form-group{margin-bottom:14px}
+  .contact-form .submit-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:6px}
+  .contact-form button[type="submit"]{
+    font-family:inherit;font-size:13.5px;font-weight:500;
+    background:var(--ink);color:var(--bg);
+    border:none;border-radius:6px;
+    padding:11px 22px;cursor:pointer;
+    transition:background .15s,transform .12s;
+    letter-spacing:-0.005em;
+  }
+  .contact-form button[type="submit"]:hover{background:var(--accent);color:var(--bg)}
+  .contact-form button[type="submit"]:active{transform:translateY(1px)}
+  .contact-form .loading,
+  .contact-form .error-message,
+  .contact-form .sent-message{
+    display:none;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.02em;
+    padding:8px 0;
+  }
+  .contact-form .loading.d-block,
+  .contact-form .error-message.d-block,
+  .contact-form .sent-message.d-block{display:block}
+  .contact-form .loading{color:var(--ink-soft)}
+  .contact-form .loading::before{content:"› ";color:var(--accent)}
+  .contact-form .error-message{color:#e06363}
+  .contact-form .error-message::before{content:"✕ "}
+  .contact-form .sent-message{color:var(--accent)}
+  .contact-form .sent-message::before{content:"✓ "}
+
+  /* ── Footer ─────────────────────────────────── */
+  footer{
+    margin-top:80px;padding-top:24px;border-top:1px solid var(--rule-soft);
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-faint);
+  }
+  footer .socials{display:flex;gap:6px}
+  footer .socials a{
+    width:30px;height:30px;display:grid;place-items:center;
+    border:1px solid var(--rule);border-radius:6px;
+    color:var(--ink-soft);text-decoration:none;
+    transition:color .15s,border-color .15s;
+  }
+  footer .socials a:hover{color:var(--accent);border-color:var(--accent)}
+  footer .socials svg{width:13px;height:13px}
+
+  /* ── Reveal ─────────────────────────────────── */
+  .reveal{opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
+  .reveal.in-view{opacity:1;transform:translateY(0)}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none}
+  }
+</style>
 </head>
-
 <body>
 
-  <!-- ======= Mobile nav toggle button ======= -->
-  <!-- <button type="button" class="mobile-nav-toggle d-xl-none"><i class="bi bi-list mobile-nav-toggle"></i></button> -->
-  <i class="bi bi-list mobile-nav-toggle d-lg-none"></i>
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex flex-column justify-content-center">
+<div class="page">
 
-    <nav id="navbar" class="navbar nav-menu">
-      <ul>
-        <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
-        <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
-        <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
-        <!-- <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a> -->
-        </li>
-        <li><a href="#services" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li>
-        <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
-      </ul>
-    </nav><!-- .nav-menu -->
+  <!-- ── SIDEBAR ── -->
+  <aside class="side">
+    <div class="id-block">
+      <h2 class="name">Muhammad Shaeel</h2>
+      <p class="role">Backend Engineer</p>
+    </div>
+  </aside>
 
-  </header><!-- End Header -->
+  <!-- Floating top-right controls -->
+  <div class="top-controls">
+    <button id="themeToggle" aria-label="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button id="menuBtn" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex flex-column justify-content-center">
-    <div class="container" data-aos="zoom-in" data-aos-delay="100">
-      <h1>Muhammad Shaeel</h1>
-      <p>I'm a <span class="typed" data-typed-items="Backend Engineer, Software Engineer, Cloud Enthusiast, Problem Solver"></span></p>
-      <div class="social-links">
-        <a href="https://twitter.com/_shaeelkhan" target="_blank" class="twitter" aria-label="Twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="https://www.linkedin.com/in/shaeelkhan/" target="_blank" class="linkedin" aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
-        <a href="https://github.com/shaeelkhan" target="_blank" class="github" aria-label="GitHub"><i class="bx bxl-github"></i></a>
-        <a href="https://stackoverflow.com/users/11809464/muhammad-shaeel" target="_blank" class="stackoverflow" aria-label="Stack Overflow"><i class="bx bxl-stack-overflow"></i></a>
+  <!-- Floating bottom-left socials -->
+  <div class="floating-socials">
+    <a href="mailto:muhammadshaeel482@gmail.com" aria-label="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/shaeelkhan/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V8h3v11zM6.5 6.7A1.7 1.7 0 118.2 5a1.7 1.7 0 01-1.7 1.7zM19 19h-3v-5.6c0-1.4-.5-2.3-1.7-2.3a1.9 1.9 0 00-1.8 1.3 2.3 2.3 0 00-.1.8V19h-3V8h3v1.3a3 3 0 012.7-1.5c2 0 3.5 1.3 3.5 4.1z"/></svg>
+    </a>
+    <a href="https://github.com/shaeelkhan" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.3 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.9 1.2 3.2 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+    </a>
+    <a href="https://twitter.com/_shaeelkhan" target="_blank" rel="noopener" aria-label="Twitter">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.5 7.43L22 22h-6.78l-4.7-6.18L4.93 22H2.17l6.96-7.96L2 2h6.91l4.25 5.62zm-2.38 18h1.85L7.2 4H5.2z"/></svg>
+    </a>
+  </div>
+
+  <!-- Side panel + backdrop -->
+  <div class="panel-backdrop" id="panelBackdrop"></div>
+  <aside class="side-panel" id="sidePanel" role="dialog" aria-modal="true" aria-label="Site menu">
+    <div class="panel-head">
+      <span class="label">Navigation</span>
+      <button class="panel-close" id="menuClose" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav>
+      <a href="#about" data-menu-link><span class="num">01</span>About</a>
+      <a href="#experience" data-menu-link><span class="num">02</span>Experience</a>
+      <a href="#stack" data-menu-link><span class="num">03</span>Tech stack</a>
+      <a href="#services" data-menu-link><span class="num">04</span>What I do</a>
+      <a href="#contact" data-menu-link><span class="num">05</span>Contact</a>
+    </nav>
+    <div class="panel-foot">
+      <span>Available worldwide</span>
+      <div class="socials">
+        <a href="mailto:muhammadshaeel482@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+        <a href="https://www.linkedin.com/in/shaeelkhan/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V8h3v11zM6.5 6.7A1.7 1.7 0 118.2 5a1.7 1.7 0 01-1.7 1.7zM19 19h-3v-5.6c0-1.4-.5-2.3-1.7-2.3a1.9 1.9 0 00-1.8 1.3 2.3 2.3 0 00-.1.8V19h-3V8h3v1.3a3 3 0 012.7-1.5c2 0 3.5 1.3 3.5 4.1z"/></svg></a>
+        <a href="https://github.com/shaeelkhan" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.3 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.9 1.2 3.2 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z"/></svg></a>
+        <a href="https://twitter.com/_shaeelkhan" target="_blank" rel="noopener" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.5 7.43L22 22h-6.78l-4.7-6.18L4.93 22H2.17l6.96-7.96L2 2h6.91l4.25 5.62zm-2.38 18h1.85L7.2 4H5.2z"/></svg></a>
       </div>
     </div>
-  </section><!-- End Hero -->
+  </aside>
 
-  <main id="main">
+  <!-- ── MAIN ── -->
+  <main>
 
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-      <div class="container" data-aos="fade-up">
+    <!-- INTRO -->
+    <section class="s hero" id="top">
+      <div class="s-head">
+        <span class="num">00</span>
+        <span class="title">Introduction</span>
+        <span class="rule"></span>
+      </div>
+      <h1>Backend engineer building <span class="accent">scalable systems</span> for production at scale.</h1>
+      <p class="lede">
+        Hi, I'm <strong>Muhammad Shaeel</strong>, a dedicated Backend Engineer with a passion for building scalable and efficient applications. Currently at <a class="co" href="https://www.linkedin.com/company/sallaapp/" target="_blank" rel="noopener">Salla<span class="ext">↗</span></a>, I work on high-throughput systems serving <strong>90K+ merchants</strong> across the MENA region.
+      </p>
+      <p class="lede">
+        With <strong>6 years</strong> of professional experience, I specialize in backend development, microservices architecture, and cloud technologies — creating robust, scalable server-side solutions.
+      </p>
 
-        <div class="section-title">
-          <h2>About Me</h2>
-          <p class="lead"></p>
+      <div class="kpi">
+        <div>
+          <div class="v">6<span class="u">yrs</span></div>
+          <div class="k">Professional<br>experience</div>
         </div>
-
-        <div class="row">
-          <div class="col-lg-12">
-            <p>
-              Hi, I'm <strong>Muhammad Shaeel</strong>, a dedicated Backend Engineer with a passion for building scalable and efficient applications. 
-              Currently at <strong>Salla E-Commerce Platform</strong>, I work on high-throughput systems serving <strong>90K+ merchants</strong> across the MENA region.
-              With <strong>4+ years of professional experience</strong>, I specialize in backend development, microservices architecture, and cloud technologies,
-              creating robust, scalable server-side solutions.
-            </p>
-            <p>
-              My expertise spans across modern web technologies including <strong>JavaScript, TypeScript, Python, React, Angular, Node.js, and NestJS</strong>. 
-              I have hands-on experience with cloud platforms like <strong>AWS, Azure, and GCP</strong>, and I'm proficient in containerization, 
-              microservices architecture, and CI/CD pipelines.
-            </p>
-            <p>
-              I thrive in <strong>Agile environments</strong> and believe in writing clean, maintainable code that solves real-world problems. 
-              Whether it's optimizing performance, implementing complex features, or migrating to modern architectures, 
-              I'm always excited to tackle new challenges.
-            </p>
-          </div>
+        <div>
+          <div class="v">90K<span class="u">+</span></div>
+          <div class="k">Merchants<br>served (MENA)</div>
         </div>
-
-        <div class="row mt-4">
-          <div class="col-lg-6">
-            <h3 class="resume-title">Core Competencies</h3>
-            <ul class="competencies-list">
-              <li><i class="bi bi-check-circle-fill"></i> Full Stack Web Development</li>
-              <li><i class="bi bi-check-circle-fill"></i> Cloud Architecture & DevOps</li>
-              <li><i class="bi bi-check-circle-fill"></i> Microservices & Event-Driven Systems</li>
-              <li><i class="bi bi-check-circle-fill"></i> Database Design & Optimization</li>
-              <li><i class="bi bi-check-circle-fill"></i> RESTful API Development</li>
-              <li><i class="bi bi-check-circle-fill"></i> Agile Development Methodologies</li>
-            </ul>
-          </div>
-          <div class="col-lg-6">
-            <h3 class="resume-title">Technology Stack</h3>
-            <div class="tech-stack">
-              <span class="badge">JavaScript</span>
-              <span class="badge">TypeScript</span>
-              <span class="badge">Python</span>
-              <span class="badge">React</span>
-              <span class="badge">Angular</span>
-              <span class="badge">Node.js</span>
-              <span class="badge">NestJS</span>
-              <span class="badge">Express</span>
-              <span class="badge">AWS</span>
-              <span class="badge">PostgreSQL</span>
-              <span class="badge">MongoDB</span>
-              <span class="badge">Redis</span>
-              <span class="badge">Docker</span>
-              <span class="badge">Git</span>
-            </div>
-          </div>
+        <div>
+          <div class="v">2.1M<span class="u">/day</span></div>
+          <div class="k">Requests handled<br>in production</div>
         </div>
+        <div>
+          <div class="v">3.4M<span class="u">+</span></div>
+          <div class="k">Records migrated<br>zero-downtime</div>
+        </div>
+      </div>
+    </section>
 
-        <!-- <div class="row">
+    <!-- ABOUT -->
+    <section class="s about" id="about">
+      <div class="s-head">
+        <span class="num">01</span>
+        <span class="title">About</span>
+        <span class="rule"></span>
+      </div>
+      <p>
+        I work across the modern backend stack — <strong>JavaScript, TypeScript, Python, Node.js, NestJS</strong> on the server, and <strong>React, Angular</strong> on the client when full-stack work is required. I have hands-on experience with cloud platforms including <strong>AWS, Azure, and GCP</strong>, and I'm proficient in containerization, microservices architecture, and CI/CD pipelines.
+      </p>
+      <p>
+        Today I'm at <a class="co" href="https://www.linkedin.com/company/sallaapp/" target="_blank" rel="noopener">Salla</a>, the SaaS platform powering 90K+ merchants across MENA. Before that I worked at <strong>DPL</strong> on event-driven Lambda migrations for Fortune 500 clients, at <strong>DAO PropTech</strong> on a 30K-WAU global investment portal, and at <strong>Solis Solutions</strong> on ad-tech for European football clubs.
+      </p>
+      <p>
+        My focus is reliability, observability, and making systems simpler over time — not adding complexity in the name of architecture.
+      </p>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="s" id="experience">
+      <div class="s-head">
+        <span class="num">02</span>
+        <span class="title">Experience</span>
+        <span class="rule"></span>
+      </div>
+
+      <div class="role">
+        <div class="when">
+          Nov 2024 — Present
+          <br><span class="now"><span class="led"></span>CURRENT</span>
+        </div>
+        <div>
+          <h3>Backend Engineer</h3>
+          <div class="at"><span class="co"><a href="https://www.linkedin.com/company/sallaapp/" target="_blank" rel="noopener">Salla</a></span><span class="ctx">— SaaS e-commerce, MENA</span></div>
+          <p class="summary">Building high-throughput backend services for the leading Saudi e-commerce platform powering 90K+ merchants. Financial workflows, identity verification, and order infrastructure.</p>
+          <ul class="bullets">
+            <li>Built a proxy-middleware service between the KYB backend and frontend handling <strong>2.1M+ daily requests</strong> for onboarding, banking, and identity verification.</li>
+            <li>Implemented real-time tracking and notifications for an Apple Wallet orders service serving <strong>80K+ merchants</strong>.</li>
+            <li>Executed a production data migration of <strong>3.4M+ records</strong> across databases — consolidated tables and improved scalability and maintainability.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="role">
+        <div class="when">Mar 2024 — Sep 2024</div>
+        <div>
+          <h3>Software Engineer, Backend</h3>
+          <div class="at"><span class="co">DPL</span><span class="ctx">— IT consulting, Microsoft Certified Partner</span></div>
+          <p class="summary">Serverless and event-driven work for Fortune 500 clients across the US, UK, and Europe.</p>
+          <ul class="bullets">
+            <li>Migrated <strong>2–3 monolithic modules</strong> to a Lambda-based event-driven microservices architecture.</li>
+            <li>Implemented event workflows using <strong>AWS SNS, SQS</strong>, and other messaging primitives.</li>
+            <li>Stack: NestJS, AWS Lambda, PostgreSQL, Redis, TypeORM, TypeScript.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="role">
+        <div class="when">Oct 2021 — Feb 2024</div>
+        <div>
+          <h3>Software Engineer, Backend</h3>
+          <div class="at"><span class="co">DAO PropTech</span><span class="ctx">— PropTech, Pakistan</span></div>
+          <p class="summary">Full-stack feature work on a global investment portal serving 30K+ weekly active users.</p>
+          <ul class="bullets">
+            <li>Shipped end-to-end features — Online Transactions, Peer-to-Peer, Marketplace — driving a <strong>15–20% engagement lift</strong>.</li>
+            <li>Revamped Twilio configuration, authentication, and logging — cut API response time and improved performance by <strong>50%+</strong>.</li>
+            <li>Built a distributed real-time logging system aggregating across multiple resources.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="role">
+        <div class="when">Sep 2020 — Oct 2021</div>
+        <div>
+          <h3>Software Engineer</h3>
+          <div class="at"><span class="co">Solis Solutions</span><span class="ctx">— Football tech, Belgium</span></div>
+          <p class="summary">Ad-tech and growth tooling for 20+ European football clubs.</p>
+          <ul class="bullets">
+            <li>Engineered an ad tracking and scheduling platform for electronic billboards.</li>
+            <li>Built a social-media management tool integrating Facebook & Instagram Graph APIs — eliminated <strong>100% of manual posting work</strong>.</li>
+            <li>Automated log ingestion — cut analyst manual workload by <strong>~95%</strong>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section class="s" id="stack">
+      <div class="s-head">
+        <span class="num">03</span>
+        <span class="title">Tech stack</span>
+        <span class="rule"></span>
+      </div>
+
+      <div class="stack">
+        <div class="group">
+          <h4><span>Languages</span><span class="c">04</span></h4>
+          <ul>
+            <li class="pri">TypeScript</li>
+            <li class="pri">JavaScript</li>
+            <li>Python</li>
+            <li>SQL</li>
+          </ul>
+        </div>
+        <div class="group">
+          <h4><span>Backend & frameworks</span><span class="c">05</span></h4>
+          <ul>
+            <li class="pri">Node.js</li>
+            <li class="pri">NestJS</li>
+            <li>Express</li>
+            <li>TypeORM</li>
+            <li>REST / GraphQL</li>
+          </ul>
+        </div>
+        <div class="group">
+          <h4><span>Cloud & infrastructure</span><span class="c">07</span></h4>
+          <ul>
+            <li class="pri">AWS</li>
+            <li>Azure</li>
+            <li>GCP</li>
+            <li>Lambda</li>
+            <li>SNS / SQS</li>
+            <li>Docker</li>
+            <li>CI/CD</li>
+          </ul>
+        </div>
+        <div class="group">
+          <h4><span>Data</span><span class="c">04</span></h4>
+          <ul>
+            <li class="pri">PostgreSQL</li>
+            <li>MongoDB</li>
+            <li>Redis</li>
+            <li>CloudWatch</li>
+          </ul>
+        </div>
+        <div class="group">
+          <h4><span>Frontend</span><span class="c">03</span></h4>
+          <ul>
+            <li>React</li>
+            <li>Angular</li>
+            <li>HTML / CSS</li>
+          </ul>
+        </div>
+        <div class="group">
+          <h4><span>Practices</span><span class="c">04</span></h4>
+          <ul>
+            <li>Microservices</li>
+            <li>Event-driven design</li>
+            <li>Observability</li>
+            <li>Zero-downtime migrations</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="s" id="services">
+      <div class="s-head">
+        <span class="num">04</span>
+        <span class="title">What I do</span>
+        <span class="rule"></span>
+      </div>
+
+      <div class="grid-2">
+        <div class="cap">
+          <span class="num">01</span>
+          <h4>Backend systems</h4>
+          <p>APIs, services, and middleware in Node.js, NestJS, and Python — built for throughput, observability, and graceful failure.</p>
+        </div>
+        <div class="cap">
+          <span class="num">02</span>
+          <h4>Cloud architecture</h4>
+          <p>AWS-first design across Lambda, SNS/SQS, RDS, and ECS. Multi-cloud experience on Azure and GCP for hybrid deployments.</p>
+        </div>
+        <div class="cap">
+          <span class="num">03</span>
+          <h4>Microservices & event-driven design</h4>
+          <p>Decomposing monoliths into independently deployable services with reliable messaging and clear service boundaries.</p>
+        </div>
+        <div class="cap">
+          <span class="num">04</span>
+          <h4>Database design & migrations</h4>
+          <p>Schema design, indexing, and multi-million-record cutovers without downtime — staged backfills, dual-writes, runbooks.</p>
+        </div>
+        <div class="cap">
+          <span class="num">05</span>
+          <h4>Performance & scalability</h4>
+          <p>Profiling, caching, and query optimization. Past results include 50%+ response-time reductions on production APIs.</p>
+        </div>
+        <div class="cap">
+          <span class="num">06</span>
+          <h4>CI/CD & DevOps essentials</h4>
+          <p>Containerized deployments, automated pipelines, and CloudWatch-based monitoring — pragmatic, not dogmatic.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="s contact" id="contact">
+      <div class="s-head">
+        <span class="num">05</span>
+        <span class="title">Contact</span>
+        <span class="rule"></span>
+      </div>
+      <h2>Available for new backend & full-stack engagements.</h2>
+      <p>Full-time, contract, or advisory. Email is the fastest way to reach me; LinkedIn works equally well.</p>
+
+      <div class="links">
+        <a href="#" id="emailLink" data-user="muhammadshaeel482" data-domain="gmail.com">
           <div>
-           ]<img src="assets/img/profile-img.jpg" class="img-fluid" alt=""> 
+            <div class="k">Email</div>
+            <div class="v" id="emailDisplay">—</div>
           </div>
-          <div class="col-lg-8 pt-4 pt-lg-0 content">
-            <h3>UI/UX Designer &amp; Web Developer.</h3>
-            <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore
-              magna aliqua.
-            </p>
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>1 May 1995</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>www.example.com</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+123 456 7890</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>New York, USA</span></li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>30</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Master</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>PhEmailone:</strong> <span>email@example.com</span>
-                  </li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
-                </ul>
-              </div>
-            </div>
-            <p>
-              Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt adipisci omnis et
-              ut. Nulla accusantium dolor incidunt officia tempore. Et eius omnis.
-              Cupiditate ut dicta maxime officiis quidem quia. Sed et consectetur qui quia repellendus itaque neque.
-              Aliquid amet quidem ut quaerat cupiditate. Ab et eum qui repellendus omnis culpa magni laudantium dolores.
-            </p>
-          </div>
-        </div> -->
-
-      </div>
-    </section><!-- End About Section -->
-
-    <!-- ======= Facts Section ======= -->
-    <!-- <section id="facts" class="facts">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Facts</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
-            in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6">
-            <div class="count-box">
-              <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
-                class="purecounter"></span>
-              <p>Happy Clients</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
-            <div class="count-box">
-              <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
-                class="purecounter"></span>
-              <p>Projects</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-headset"></i>
-              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1"
-                class="purecounter"></span>
-              <p>Hours Of Support</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-award"></i>
-              <span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1"
-                class="purecounter"></span>
-              <p>Awards</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>End Facts Section -->
-
-    <!-- ======= Skills Section ======= -->
-    <!-- <section id="skills" class="skills section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Skills</h2>
-         <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
-            in iste officiis commodi quidem hic quas.</p> 
-        </div>
-
-        <div class="row skills-content">
-
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill">HTML <i class="val">100%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">CSS <i class="val">50%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">JavaScript <i class="val">75%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill">PHP <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">WordPress/CMS <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">Photoshop <i class="val">55%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>End Skills Section -->
-
-    <!-- ======= Resume Section ======= -->
-    <section id="resume" class="resume">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Professional Journey</h2>
-          <p class="lead">Building innovative solutions across diverse tech ecosystems</p>
-        </div>
-
-        <div class="row">
-          <!-- <div class="col-lg-6"> -->
-            <!-- <h3 class="resume-title">Sumary</h3> -->
-            <!-- <div class="resume-item pb-0">
-              <h4>Muhammad Shaeel</h4>
-              <p><em>A Software Engineer currently working at @DAOProptech , Pakistan.
-                  At core, I am a Computer Scientist with a diverse work experience, including programming, cloud and
-                  consulting. I have an extensive knowledge of software development cycle as well as proficiency in
-                  several programming languages.</em></p>
-              <ul>
-                <li>Islamabad, Pakistan</li>
-                <li>+92 315 5397474</li>
-                <li>muhammadshaeel482@gmail.com</li>
-              </ul>
-            </div> -->
-
-            <!-- <h3 class="resume-title">Education</h3> -->
-            <!-- <div class="resume-item">
-              <h4>Batchelors in Computer Science <span style="font-size:12px; color: black; ">2016-2020</span> </h4>
-              <h5>Important Courses</h5>
-              <ul>
-                <li>Object Oriented Programming</li>
-                <li>Data Structures & Algorithms</li>
-                <li>Object Oriented Analysis & Design</li>
-                <li>Computer Architecture</li>
-                <li>Visual Programing - C#</li>
-                <li>Artifical Intelegence</li>
-                <li>Advance Computer Programming - JAVA</li>
-                <li>Machine Learning & Neural Networks</li>
-                <li>Database Analysis & Algorithms</li>
-                <li>Image Processing</li>
-                <li>Human Computer Interaction</li>
-                <li>Computer Organization & Assembly Language</li>
-                <li>Introduction to Web Development</li>
-                <li>Digital Logic Design</li>
-                <li>Discrete Structures</li>
-                <li>System Analysis & Design</li>
-                <li>Introduction to Networking</li>
-                <li>Compiler Construction</li>
-                <li>Computer Organization & Assembly Language (COAL)</li>
-                <li>Introduction to Computing</li>
-                <li>Database Design</li>
-              </ul>
-            </div> -->
-
-            <!-- <div class="resume-item">
-              <h4>Bachelor of Fine Arts &amp; Graphic Design</h4>
-              <h5>2010 - 2014</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Quia nobis sequi est occaecati aut. Repudiandae et iusto quae reiciendis et quis Eius vel ratione eius
-                unde vitae rerum voluptates asperiores voluptatem Earum molestiae consequatur neque etlon sader mart
-                dila</p>
-            </div> -->
-          <!-- </div> -->
-
-          <div class="col-lg-12">
-            <h3 class="resume-title">Professional Experience</h3>
-            
-            <div class="resume-item">
-              <h4>Backend Engineer</h4>
-              <h5>November 2024 - Present</h5>
-              <p><em><a href="https://www.linkedin.com/company/sallaapp/" target="_blank" class="company-link">Salla E-Commerce Platform</a> - Leading Saudi SaaS Platform</em></p>
-              <p class="company-description">A leading Saudi-based SaaS e-commerce platform enabling over 90K+ merchants to build, manage, and scale online stores across the MENA region.</p>
-              <ul>
-                <li>Built a high-throughput <strong>proxy middleware service</strong> between KYB backend and frontend, processing <strong>2.1M+ daily requests</strong> to support critical operations including user onboarding, banking & identity verification</li>
-                <li>Implemented <strong>real-time tracking and notifications</strong> in a high-availability Apple Wallet orders service supporting <strong>80K+ merchants</strong>, ensuring reliable order visibility</li>
-                <li>Executed a large-scale production <strong>data migration of 3.4M+ records</strong> across databases, consolidating tables and improving scalability, performance, and maintainability of critical systems</li>
-                <li>Ensured reliability and compliance in financial workflows for a platform serving the entire MENA region</li>
-              </ul>
-            </div>
-
-            <div class="resume-item">
-              <h4>Software Engineer - Backend</h4>
-              <h5>March 2024 - September 2024</h5>
-              <p><em><a href="https://www.linkedin.com/company/dpl-it/" target="_blank" class="company-link">DPL</a> - Leading IT Consulting & Microsoft Certified Partner</em></p>
-              <p class="company-description">Serving Fortune 500 clients across the US, UK, and Europe with enterprise-grade solutions.</p>
-              <ul>
-                <li>Contributed to the migration of <strong>2-3 monolithic modules</strong> to a Lambda-based event-driven microservices architecture</li>
-                <li>Implemented event-driven workflows and integrations using <strong>AWS SNS, SQS</strong>, and other messaging services</li>
-                <li>Monitored and optimized microservice performance with <strong>AWS CloudWatch</strong></li>
-                <li>Worked with <strong>NestJS, AWS Lambda, PostgreSQL, Redis, TypeORM, and TypeScript</strong> in serverless architecture</li>
-              </ul>
-            </div>
-            <div class="resume-item">
-              <h4>Software Engineer - Backend</h4>
-              <h5>October 2021 - February 2024</h5>
-              <p><em><a href="https://www.linkedin.com/company/daoproptech/" target="_blank" class="company-link">DAO PropTech</a> - PropTech Innovation Leader</em></p>
-              <p class="company-description">Transforming Pakistan's real estate ecosystem, optimizing the way people buy, sell, research, manage and market property through cost-based pricing and transparency.</p>
-              <ul>
-                <li>Designed, implemented and shipped <strong>full-stack features</strong> from API development to frontend integration for <strong>30K+ WAUs</strong></li>
-                <li>Implemented core product features including <strong>Online Transactions, Peer-to-Peer, and Marketplace</strong> functionalities</li>
-                <li>Increased user engagement by <strong>15-20%</strong> through continuous product feedback implementation and feature scaling</li>
-                <li>Revamped core backend services including <strong>Twilio Configurations, Authentication & Logging Mechanisms</strong>, reducing API response time and increasing performance gain by over <strong>50%</strong></li>
-                <li>Executed deployments on <strong>AWS EC2 servers</strong> and monitored error logs to boost product efficiency</li>
-                <li>Implemented a <strong>distributed logging system</strong> to collect and process logs from different resources in real-time</li>
-                <li>Played a pivotal role as Product team member, contributing to full-stack features for a <strong>global investment portal</strong></li>
-              </ul>
-            </div>
-            <div class="resume-item">
-              <h4>Software Engineer</h4>
-              <h5>September 2020 - October 2021</h5>
-              <p><em>Solis Solutions - Football Tech Startup</em></p>
-              <p class="company-description">A product-based startup providing services primarily for Football Clubs of Belgium, specializing in go-to-market and growth strategy through custom application development.</p>
-              <ul>
-                <li>Engineered digital ad tracking & scheduling platform for electronic billboards, serving <strong>20+ international football clubs</strong></li>
-                <li>Led backend effort to prototype additional features/modules and carried out multiple instance’s
-                  deployments on AWS VM running a Nginx web server.</li>
-                <li>Developed, and launched a sophisticated web-based Social Media Marketing (SMM) tool that integrated Facebook and Instagram’s Graph APIs. This solution eliminated the need for manual intervention by 100%.</li>
-                <li> Revolutionized data analytics through the implementation of an automated log ingestion system, slashing manual workload by an impressive 95%.</li> 
-              </ul>
-            </div>
-
-                <!-- <p><em>A product-based start-up providing services in Blockchain, NFT Platforms and Tokenomics.
-                  Specializing in go-to-market and growth strategy solis solutions helps its clients grow through custom
-                  application development. </em></p>
-              <ul>
-                <li>Re-engineered frontend of an advertisement monitoring tool (web-application) optimizing load time by
-                  ~4 to 5 seconds and performance gain of over 100%.</li>
-                <li>Led backend effort to prototype additional features/modules and carried out multiple instance’s
-                  deployments on AWS VM running a Nginx web server.</li>
-                <li>Single handedly build and deployed a Social Media Marketing (SMM) tool (web application) from
-                  scratch incorporating Facebook and Instagram Graph Api’s.</li> -->
-                <!-- <li>Created 4+ design presentations and proposals a month for clients and account managers</li> -->
-                </ul>
-            </div>
-          </div>
-        </div>
-        <!-- <a class="button" style="margin-top:  100px;"  href="./assets/shaeel-resume.pdf" download="resume ">Download</a> -->
-      </div>
-    </section><!-- End Resume Section -->
-
-    <!-- ======= Portfolio Section ======= -->
-    <!-- <section id="portfolio" class="portfolio section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Portfolio</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
-            in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 1</h4>
-                <p>App</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery"
-                    class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery"
-                    class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 2</h4>
-                <p>App</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery"
-                    class="portfolio-lightbox" title="App 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Card 2</h4>
-                <p>Card</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery"
-                    class="portfolio-lightbox" title="Card 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Web 2</h4>
-                <p>Web</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery"
-                    class="portfolio-lightbox" title="Web 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 3</h4>
-                <p>App</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery"
-                    class="portfolio-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Card 1</h4>
-                <p>Card</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery"
-                    class="portfolio-lightbox" title="Card 1"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Card 3</h4>
-                <p>Card</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery"
-                    class="portfolio-lightbox" title="Card 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery"
-                    class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" class="portfolio-details-lightbox" data-glightbox="type: external"
-                    title="Portfolio Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>End Portfolio Section -->
-
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Services</h2>
-          <!-- <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
-            in iste officiis commodi quidem hic quas.</p> -->
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box iconbox-blue">
-              <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke="none" stroke-width="0" fill="#f5f5f5"
-                    d="M300,521.0016835830174C376.1290562159157,517.8887921683347,466.0731472004068,529.7835943286574,510.70327084640275,468.03025145048787C554.3714126377745,407.6079735673963,508.03601936045806,328.9844924480964,491.2728898941984,256.3432110539036C474.5976632858925,184.082847569629,479.9380746630129,96.60480741107993,416.23090153303,58.64404602377083C348.86323505073057,18.502131276798302,261.93793281208167,40.57373210992963,193.5410806939664,78.93577620505333C130.42746243093433,114.334589627462,98.30271207620316,179.96522072025542,76.75703585869454,249.04625023123273C51.97151888228291,328.5150500222984,13.704378332031375,421.85034740162234,66.52175969318436,486.19268352777647C119.04800174914682,550.1803526380478,217.28368757567262,524.383925680826,300,521.0016835830174">
-                  </path>
-                </svg>
-                <i class="bx bx-slideshow"></i>
-              </div>
-              <h4><a href="">Web Application</a></h4>
-              <p> A web application is a software or program which is accessible using any web browser.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
-            data-aos-delay="200">
-            <div class="icon-box iconbox-orange ">
-              <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke="none" stroke-width="0" fill="#f5f5f5"
-                    d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426">
-                  </path>
-                </svg>
-                <i class="bx bx-desktop"></i>
-              </div>
-              <h4><a href="">Desktop Application</a></h4>
-              <p>A desktop application is a software program that can be run on a standalone computer.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in"
-            data-aos-delay="300">
-            <div class="icon-box iconbox-pink">
-              <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke="none" stroke-width="0" fill="#f5f5f5"
-                    d="M300,541.5067337569781C382.14930387511276,545.0595476570109,479.8736841581634,548.3450877840088,526.4010558755058,480.5488172755941C571.5218469581645,414.80211281144784,517.5187510058486,332.0715597781072,496.52539010469104,255.14436215662573C477.37192572678356,184.95920475031193,473.57363656557914,105.61284051026155,413.0603344069578,65.22779650032875C343.27470386102294,18.654635553484475,251.2091493199835,5.337323636656869,175.0934190732945,40.62881213300186C97.87086631185822,76.43348514350839,51.98124368387456,156.15599469081315,36.44837278890362,239.84606092416172C21.716077023791087,319.22268207091537,43.775223500013084,401.1760424656574,96.891909868211,461.97329694683043C147.22146801428983,519.5804099606455,223.5754009179313,538.201503339737,300,541.5067337569781">
-                  </path>
-                </svg>
-                <i class="bx bx-mobile"></i>
-              </div>
-              <h4><a href="">Mobile App</a></h4>
-              <p>A software application developed specifically for use on small, wireless computing devices.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
-            <div class="icon-box iconbox-yellow">
-              <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke="none" stroke-width="0" fill="#f5f5f5"
-                    d="M300,503.46388370962813C374.79870501325706,506.71871716319447,464.8034551963731,527.1746412648533,510.4981551193396,467.86667711651364C555.9287308511215,408.9015244558933,512.6030010748507,327.5744911775523,490.211057578863,256.5855673507754C471.097692560561,195.9906835881958,447.69079081568157,138.11976852964426,395.19560036434837,102.3242989838813C329.3053358748298,57.3949838291264,248.02791733380457,8.279543830951368,175.87071277845988,42.242879143198664C103.41431057327972,76.34704239035025,93.79494320519305,170.9812938413882,81.28167332365135,250.07896920659033C70.17666984294237,320.27484674793965,64.84698225790005,396.69656628748305,111.28512138212992,450.4950937839243C156.20124167950087,502.5303643271138,231.32542653798444,500.4755392045468,300,503.46388370962813">
-                  </path>
-                </svg>
-                <i class="bx bx-layer"></i>
-              </div>
-              <h4><a href="">Backend Development</a></h4>
-              <p>Back-end development refers to the development of server-side logic that powers websites and apps from
-                behind the scenes.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
-            <div class="icon-box iconbox-red">
-              <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke="none" stroke-width="0" fill="#f5f5f5"
-                    d="M300,532.3542879108572C369.38199826031484,532.3153073249985,429.10787420159085,491.63046689027357,474.5244479745417,439.17860296908856C522.8885846962883,383.3225815378663,569.1668002868075,314.3205725914397,550.7432151929288,242.7694973846089C532.6665558377875,172.5657663291529,456.2379748765914,142.6223662098291,390.3689995646985,112.34683881706744C326.66090330228417,83.06452184765237,258.84405631176094,53.51806209861945,193.32584062364296,78.48882559362697C121.61183558270385,105.82097193414197,62.805066853699245,167.19869350419734,48.57481801355237,242.6138429142374C34.843463184063346,315.3850353017275,76.69343916112496,383.4422959591041,125.22947124332185,439.3748458443577C170.7312796277747,491.8107796887764,230.57421082200815,532.3932930995766,300,532.3542879108572">
-                  </path>
-                </svg>
-                <i class="bx bx-code"></i>
-              </div>
-              <h4><a href=""></a>Custom Web Development</h4>
-              <p>Web development is the work involved in developing a website for the Internet or an intranet.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
-            <div class="icon-box iconbox-teal">
-              <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke="none" stroke-width="0" fill="#f5f5f5"
-                    d="M300,566.797414625762C385.7384707136149,576.1784315230908,478.7894351017131,552.8928747891023,531.9192734346935,484.94944893311C584.6109503024035,417.5663521118492,582.489472248146,322.67544863468447,553.9536738515405,242.03673114598146C529.1557734026468,171.96086150256528,465.24506316201064,127.66468636344209,395.9583748389544,100.7403814666027C334.2173773831606,76.7482773500951,269.4350130405921,84.62216499799875,207.1952322260088,107.2889140133804C132.92018162631612,134.33871894543012,41.79353780512637,160.00259165414826,22.644507872594943,236.69541883565114C3.319112789854554,314.0945973066697,72.72355303640163,379.243833228382,124.04198916343866,440.3218312028393C172.9286146004772,498.5055451809895,224.45579914871206,558.5317968840102,300,566.797414625762">
-                  </path>
-                </svg>
-                <i class="bx bx-atom"></i>
-              </div>
-              <h4><a href="">Front-end Development</a></h4>
-              <p>Front-end portion of websites and web applications—that is, the part that users actually see and
-                interact with. </p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Services Section -->
-
-    <!-- ======= Testimonials Section ======= -->
-    <!-- <section id="testimonials" class="testimonials section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Testimonials</h2>
-        </div>
-
-        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium
-                  quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div> End testimonial item 
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis
-                  quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div> End testimonial item 
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim
-                  tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div> End testimonial item 
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit
-                  minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div> End testimonial item 
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa
-                  labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-              </div>
-            </div> End testimonial item 
-
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-    </section>End Testimonials Section -->
-
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Contact</h2>
-        </div>
-
-        <div class="row mt-1">
-
-          <div class="col-lg-4">
-            <div class="info">
-              <div class="address">
-                <i class="bi bi-geo-alt"></i>
-                <h4>Location:</h4>
-                <p>Islamabad Pakistan</p>
-              </div>
-
-              <div class="email">
-                <i class="bi bi-envelope"></i>
-                <h4>Email:</h4>
-                <p>muhammadshaeel482@gmail.com</p>
-              </div>
-
-              <!-- <div class="phone">
-                <i class="bi bi-phone"></i>
-                <h4>Call:</h4>
-              </div> -->
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-8 mt-5 mt-lg-0">
-
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                </div>
-              </div>
-              <div class="form-group mt-3">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-              </div>
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Contact Section -->
-
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="container">
-      <h3>Muhammad Shaeel</h3>
-      <!-- <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p> -->
-      <div class="social-links">
-        <a href="https://twitter.com/_shaeelkhan" target="_blank" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="https://www.linkedin.com/in/shaeelkhan/" target="_blank" class="linkedin"><i
-            class="bx bxl-linkedin"></i>
+          <span class="arrow">↗</span>
         </a>
-        <a href="https://github.com/shaeelkhan" target="_blank" class="linkedin"><i class="bx bxl-github"></i></a>
-        <a href="https://stackoverflow.com/users/11809464/muhammad-shaeel" target="_blank" class="linkedin"><i
-            class="bx bxl-stack-overflow"></i></a>
+        <a href="https://www.linkedin.com/in/shaeelkhan/" target="_blank" rel="noopener">
+          <div>
+            <div class="k">LinkedIn</div>
+            <div class="v">in/shaeelkhan</div>
+          </div>
+          <span class="arrow">↗</span>
+        </a>
+        <a href="https://github.com/shaeelkhan" target="_blank" rel="noopener">
+          <div>
+            <div class="k">GitHub</div>
+            <div class="v">@shaeelkhan</div>
+          </div>
+          <span class="arrow">↗</span>
+        </a>
+        <a href="https://twitter.com/_shaeelkhan" target="_blank" rel="noopener">
+          <div>
+            <div class="k">X / Twitter</div>
+            <div class="v">@_shaeelkhan</div>
+          </div>
+          <span class="arrow">↗</span>
+        </a>
       </div>
-      <div class="copyright">
-        Copyright &copy; <strong><span>Muhammad Shaeel</span></strong>
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: [license-url] -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/ -->
-        <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
-      </div>
-    </div>
-  </footer><!-- End Footer -->
 
-  <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+      <form action="forms/contact.php" method="post" role="form" class="php-email-form contact-form">
+        <div class="cf-head">Send a message</div>
+        <div class="row">
+          <div class="field form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Your name" required>
+          </div>
+          <div class="field form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="you@company.com" required>
+          </div>
+        </div>
+        <div class="field form-group">
+          <label for="subject">Subject</label>
+          <input type="text" name="subject" class="form-control" id="subject" placeholder="What is this about?" required>
+        </div>
+        <div class="field form-group">
+          <label for="message">Message</label>
+          <textarea name="message" class="form-control" rows="5" placeholder="Tell me a bit about what you are working on..." required></textarea>
+        </div>
+        <div class="submit-row">
+          <div>
+            <div class="loading">Sending...</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Message sent. I will get back to you shortly.</div>
+          </div>
+          <button type="submit">Send message</button>
+        </div>
+      </form>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script type="module" src="assets/vendor/php-email-form/validate.js"></script>
+      <footer>
+        <div>© 2026 Muhammad Shaeel</div>
+        <div class="socials">
+          <a href="https://github.com/shaeelkhan" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.3 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.9 1.2 3.2 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z"/></svg></a>
+          <a href="https://www.linkedin.com/in/shaeelkhan/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5V8h3v11zM6.5 6.7A1.7 1.7 0 118.2 5a1.7 1.7 0 01-1.7 1.7zM19 19h-3v-5.6c0-1.4-.5-2.3-1.7-2.3a1.9 1.9 0 00-1.8 1.3 2.3 2.3 0 00-.1.8V19h-3V8h3v1.3a3 3 0 012.7-1.5c2 0 3.5 1.3 3.5 4.1z"/></svg></a>
+          <a href="https://twitter.com/_shaeelkhan" target="_blank" rel="noopener" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.5 7.43L22 22h-6.78l-4.7-6.18L4.93 22H2.17l6.96-7.96L2 2h6.91l4.25 5.62zm-2.38 18h1.85L7.2 4H5.2z"/></svg></a>
+        </div>
+      </footer>
+    </section>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js">
+  </main>
+</div>
 
-  </script>
+<script>
+  // Theme
+  (function(){
+    const root = document.documentElement;
+    const stored = localStorage.getItem('theme_v2') || 'dark';
+    // Force dark as default on first visit (already 'dark' but explicit)
+    root.setAttribute('data-theme', stored);
+    const btn = document.getElementById('themeToggle');
+    btn && btn.addEventListener('click', ()=>{
+      const cur = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', cur);
+      localStorage.setItem('theme_v2', cur);
+    });
+  })();
+
+  // Side panel
+  (function(){
+    const panel = document.getElementById('sidePanel');
+    const backdrop = document.getElementById('panelBackdrop');
+    const btn = document.getElementById('menuBtn');
+    const close = document.getElementById('menuClose');
+    const open = ()=>{ panel.classList.add('open'); backdrop.classList.add('open'); document.body.classList.add('menu-open'); };
+    const shut = ()=>{ panel.classList.remove('open'); backdrop.classList.remove('open'); document.body.classList.remove('menu-open'); };
+    btn && btn.addEventListener('click', open);
+    close && close.addEventListener('click', shut);
+    backdrop && backdrop.addEventListener('click', shut);
+    document.querySelectorAll('[data-menu-link]').forEach(a=>a.addEventListener('click', shut));
+    document.addEventListener('keydown', e=>{ if (e.key === 'Escape') shut(); });
+  })();
+
+  // Contact form (Firebase Firestore)
+  // Loaded as ES module so it can pull in Firebase modular SDK.
+  (function(){
+    const s = document.createElement('script');
+    s.type = 'module';
+    s.src = 'assets/validate.js';
+    document.body.appendChild(s);
+  })();
+
+  // Email (assemble client-side to bypass CDN email-protection rewrites)
+  (function(){
+    const u = 'muhammadshaeel482', d = 'gmail.com';
+    const addr = u + '\u0040' + d;
+    const link = document.getElementById('emailLink');
+    if (link) link.href = 'mailto:' + addr;
+    const disp = document.getElementById('emailDisplay');
+    if (disp) disp.textContent = addr;
+    document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{ a.href = 'mailto:' + addr; });
+  })();
+</script>
 
 </body>
-
 </html>
